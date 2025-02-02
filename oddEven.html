@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>oddEven.html</title>
+    <script src="./jquary.js"></script>
+    <style>
+        body {
+            background-color: rgb(180, 213, 254);
+        }
+        .start {
+            /* display: none; */
+            width : 100px;
+            height : 70px;
+            margin-top: 350px;
+            position: absolute;
+            margin-left: 145px;
+            border-radius: 30%;
+        }
+        .start.show {
+            display: inline;
+        }
+        .odd,.even {
+            margin-top: 200px;
+            position: absolute;
+            margin-left: 20px;
+            border-radius: 30%;
+            font-size: 20px;
+            width : 150px;
+            height : 150px;
+        }
+        .odd {
+            left: 200px;
+        }
+        h3 {
+            color : #000000;
+        }
+        h3.remove {
+            background-color: transparent
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="./OddEvenGame.svg">
+        <h3></h3>
+        <div>
+            <button class="odd">Odd</button>
+            <button class="even">Even</button>
+        </div>
+        <button class="start">Restart</button>
+    </div>
+
+    <script>
+        let num = parseInt(Math.random() * 9) + 1;
+        console.log(num);
+        let oddEven = ' ';
+
+        const getNum = function (randomNum) {
+            if (num % 2 == 0) {
+                oddEven = 'Even';
+            }
+            else {
+                oddEven = 'Odd';
+            }
+        }
+        getNum(num);
+
+        $('button').click(function(){
+            if(!$(this).hasClass('try')) {
+                $('button').attr("disabled",true);
+            }
+            let now = $(this).text();
+            $('h3').removeClass('remove');
+            if(oddEven === now) {
+                $('h3').text("정답입니다!");
+                $('button.start').removeClass('show');
+
+            }
+            else {
+                $('h3').text("오답입니다!");
+                $('button.start').addClass('show');
+                $('button').attr("disabled",true);
+            }
+        });
+
+        $('button.start').click(function(){
+            $(this).removeClass(show);
+            num = parseInt(Math.random() * 9) + 1;
+            getNum(num);
+        });
+    </script>
+</body>
+
+</html>
