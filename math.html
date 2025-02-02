@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>math.html</title>
+    <script src="./jquary.js"></script>
+</head>
+
+<body>
+    <!-- <button>A</button>
+    <button>B</button> -->
+
+    <h1>숫자 맞추기 게임</h1>
+    <h3>목숨 : <span>10</span></h3>
+    <input type="number" disabled value="0">
+    <button class="start">Start</button>
+    <button class="check" disabled >Check</button>
+    <h4></h4>
+    <script>
+        // $('button:nth-of-typeof(1)').click(function(){
+        //     alert('A버튼');
+        // });
+        // $('button:nth-of-typeof(2)').click(function(){
+        //     console.log('B버튼');
+        // });
+
+        //Math.floor = 내림
+        //Math.cell = 올림
+        //Math.abs = 절댓값
+        //$('input').attr(이름) 이름의 값을 가져오고
+        //$('input').attr(이름,다른이름)을 하면 다른이름으로 치환된다
+
+        // console.log(Math.floor(Math.random()*9)+1);
+
+        let [num, live] = [0, 10];
+
+        $('button.start').click(function () {
+            num = parseInt(Math.random() * 99) + 1;
+            console.log(num);
+            live = 10;
+            $('input').val(0); 
+            $('span').text(live);
+            $('h4').text(" ");
+            $('input').attr('disabled', false);
+            $('button.check').attr('disabled', false);
+            $(this).attr('disabled', true);
+        });
+        $('button.check').click(function () {
+            let user = $('input').val() * 1;
+            live = parseInt($('span').text());
+
+            if (user < num) {
+                $('h4').text(`${user}보다 큽니다`);
+                live--
+            }
+            else if (user > num) {
+                $('h4').text(`${user}보다 작습니다`);
+                live--;
+            }
+            if (live === 0 || user === num) {
+                if(live === 0) {
+                    alert("게임을 더이상 하실 수 없습니다.")
+                    $('h4').text(`끝났습니다 정답은 ${num}`);
+                }
+                else {
+                    $('h4').text('맞췄습니다.');
+                }
+                $('input').attr('disabled', true);
+                $('button.start').text("Restart");
+                $('button.start').attr('disabled', false);
+                $(this).attr('disabled', true);
+            }
+            $('span').text(live);
+        });
+    </script>
+</body>
+
+</html>
