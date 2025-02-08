@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquary.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <h2>이 태그를 복제해봐요!</h2>
+        <h3>이 태그를 복제해봐요!</h3>
+    </div>
+    <script>
+        const h2 = $('h2');
+        const h3 = $('h3');
+        const wrap = $('.wrap');
+        // const h2Clone = h2.clone();
+        //wrap 안에 clone을 한 h2를 하나 더 넣음
+        //append
+        // wrap.append(h2Clone);
+        
+        // for (let i = 0; i < 10; i++) {
+        //     const h2Clone = h2.clone();
+        //     wrap.append(h2Clone);
+        // }
+
+        let obj = [
+            {
+                name : 'name1',
+                id : 'id'
+            },
+            {
+                name : 'name2',
+                id : 'id'
+            },
+            {
+                name : 'name3',
+                id : 'id'
+            }
+        ]
+        obj.forEach(function(e){
+            // 1. 클론
+            let h2Clone = h2.clone();
+            // 2. id에 대한 내용을 h2Clone의 내용으로 치환
+            h2Clone.text(e.id)
+            // 3. 클론한걸 끼워넣음
+            wrap.append(h2Clone);
+
+            //h3을 복제
+            let h3Clone = h3.clone();
+            //id 다음으로 pw가 들어올 수 있도록 작업
+            h3Clone.text(e.name);
+            wrap.append(h3Clone);
+        })
+        console.log($('h2'));
+        h2.remove();
+        h3.remove();
+    </script>
+</body>
+
+</html>
