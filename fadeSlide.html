@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.view {
+            width: 50%;
+            margin: 0 auto;
+            /* 가운데 맞춤 */
+            position: relative;
+            height: 500px;
+        }
+
+        div.slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 500px;
+            opacity: 0;
+            transition: opacity 0.5s;
+            /*서서히 없어짐*/
+
+        }
+
+        div.slide.active {
+            opacity: 1;
+        }
+
+        div.slide.s1 {
+            background-color: aliceblue;
+        }
+
+        div.slide.s2 {
+            background-color: aqua;
+        }
+
+        div.slide.s3 {
+            background-color: pink;
+        }
+
+        div.slide.s4 {
+            background-color: yellow;
+        }
+
+        div.slide.s5 {
+            background-color: red;
+        }
+
+        div.btns {
+            /* 
+            absuluate 에서 가운데 주는 방법은
+            뜯어서 붙일 때 기준의 높이가 있어야  
+            */
+            width: 100%;
+            left: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+            top: 0;
+            bottom: 0;
+            /*가운데 맞춤*/
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            display: block;
+            width: 90px;
+            height: 40px;
+            font-size: 30px;
+            border: 0;
+            background-color: transparent;
+            cursor: pointer;
+        }
+    </style>
+    <script src="./jquary.js"></script>
+
+</head>
+
+<body>
+    <div class="view">
+        <div class="slide s1 active"></div>
+        <div class="slide s2"></div>
+        <div class="slide s3"></div>
+        <div class="slide s4"></div>
+        <div class="slide s5"></div>
+        <div class="btns">
+            <button class="prev">⬅️</button>
+            <button class="next">➡️</button>
+        </div>
+    </div>
+    <script>
+        const btns = $('button');
+        const slides = $('.slide');
+        let index = 0;
+        btns.click(function () {
+            let left = $(this).hasClass('prev');
+            if (left) {
+               index--;
+            }
+            else {
+                index++;
+            }
+            console.log(index % slides.length);
+            slides.removeClass('active');
+            //몇번째 슬라이드에 active 클래스 추가
+            slides.eq(index % slides.length).addClass('active');
+        });
+    </script>
+</body>
+
+</html>

@@ -106,13 +106,20 @@
     <script>
         const btnAdd = $('.add-btn');
         const todoList = $('.todo-list');
+        const btnDele = $('.delete-btn');
 
         btnAdd.click(function(e,i) {
-            let todoItem = $('.todo-item').first().clone();
+            let todoItem = $('.todo-item').first().clone(true);
+            let val = $(this).prev().val();
+            if(val === null || val == " ") {
+                
+            }
             todoList.prepend(todoItem);
-            todoItem.children('.todo-text').text($(this).prev().val());
-            
-            
+            todoItem.children('.todo-text').text(val);       
+        });
+
+        btnDele.click(function(){
+            $(this).parent().remove();
         });
     </script>
 </body>
