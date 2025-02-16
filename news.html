@@ -23,7 +23,7 @@
         .card-container {
             width: 90%;
             max-width: 400px;
-            /* overflow: hidden; */
+            /*overflow: hidden;*/
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             background: #fff;
@@ -135,12 +135,47 @@
         const info = $('article');
         const card = $('.card');
         const btn = $('button');
+        const like = $('.like');
+        let value = 0;
         let contianer = $('.card-container');
         let pg = $('.pg');
-        card.css('width',`${news.length * 100}%`);
-        pg.children('span').last().text(news.length);
-        let value = 0;
 
+        card.css('width',`${news.length * 100}%`);
+        card.css('margin-left','-100%');
+        pg.children('span').last().text(news.length);
+
+        function slide (left) {
+            if(left){
+                if(value > 0) {
+                    // let art = card.children().first();
+                    // card.append(art);
+                    value--;
+                } 
+            }
+            else {
+                if(value < news.length-1) {
+                    // let art = card.children().last();
+                    // card.prepend(art);
+                    value++;
+                }
+            }
+            card.stop().animate({marginLeft: `${-value * 100}%`},500);
+            // card.stop().animate({marginLeft: `${-value * 100}%`},500,function(){
+            //     card.css('margin-left', '0%');
+            // });
+
+            pg.children('span').first().text(value+1);
+        }
+
+        like.click(function(){
+            $(this).toggleClass('show');
+            if($(this).hasClass('show')) {
+                $(this).text("★");            
+            }
+            else {
+                $(this).text("☆");
+            }
+        });
         news.forEach(function(e){
             let infoCl = info.clone(true);
             infoCl.children('h2').text(e.title);
@@ -150,28 +185,15 @@
         });
         btn.click(function(){
             let left = $(this).hasClass('prev');
-            let right = $(this).hasClass('next');
-            if(right) {
-                if(value < news.length-1) {
-                    value++;
-                }
-            }
-            if(left) {
-                if(value > 0) {
-                    value--;
-                } 
-            }
-            card.stop().animate(
-                    {
-                        marginLeft: `${-value * 100}%`
-                    },500
-                );
-            pg.children('span').first().text(value+1);
+            slide(left);
+        });
+        contianer.on('swipeleft',function(){
+            slide(false);
+        });
+        contianer.on('swiperight',function(){
+            slide(true);
         });
         info.remove();
-        contianer.on('swipeleft',function(){
-            alert("left");
-        });
     </script>
 </body>
 </html> 
