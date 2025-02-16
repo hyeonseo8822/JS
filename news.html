@@ -120,6 +120,9 @@
         </div>
     </div>
     <script>
+
+        // 무한로프
+        // 앞에 준비가 되어있어야 함(꼭 마지막얘를 앞에 넣어야 함)
        let news = [
             { title: "AI가 의료 산업을 혁신한다", detail: "AI 기술이 의료 산업에서 점점 더 중요한 역할을 하고 있습니다. 최근에는 AI를 활용한 진단 기술이 발전하여 의사들이 질병을 조기에 발견하고 정확한 치료법을 추천하는 데 도움을 주고 있습니다. 특히, 인공지능이 방대한 의료 데이터를 분석하여 최적의 치료 방법을 제시하는 시스템이 개발되면서 의료 서비스의 효율성이 크게 향상되고 있습니다.", img: "./img/slide1.jpg" },
             { title: "탄소 배출 제로를 위한 신기술", detail: "기후 변화 대응을 위해 세계 각국이 탄소 배출을 줄이기 위한 다양한 신기술을 개발하고 있습니다. 특히, 탄소 포집 및 저장(CCS) 기술이 주목받고 있으며, 이를 통해 산업 현장에서 발생하는 탄소를 효과적으로 제거할 수 있습니다. 또한, 친환경 연료 개발과 재생 가능 에너지 활용이 확대되면서 지속 가능한 미래를 위한 노력이 계속되고 있습니다.", img: "./img/slide2.jpg" },
@@ -132,40 +135,45 @@
             { title: "신재생 에너지의 미래", detail: "전 세계가 탄소 중립 목표를 달성하기 위해 신재생 에너지 개발에 박차를 가하고 있습니다. 태양광과 풍력 에너지는 지속적으로 효율성이 개선되며 기존 화석 연료를 대체할 가능성이 커지고 있습니다. 하지만, 에너지 저장 기술과 인프라 구축 문제를 해결하지 않으면 신재생 에너지의 안정적인 공급이 어렵다는 지적도 나오고 있습니다.", img: "./img/slide9.jpg" },
             { title: "휴머노이드 로봇의 상용화", detail: "최근 휴머노이드 로봇이 다양한 산업 분야에서 도입되면서 상용화가 가속화되고 있습니다. 제조업과 서비스업에서 인간을 보조하는 역할을 하고 있으며, AI와 결합하여 더욱 정교한 작업을 수행할 수 있게 되었습니다. 하지만, 로봇이 인간의 일자리를 대체할 가능성에 대한 우려도 커지고 있으며, 이에 대한 사회적 논의가 필요합니다.", img: "./img/slide10.jpg" }
         ];
-        const info = $('article');
+        let art = $('article');
         const card = $('.card');
         const btn = $('button');
         const like = $('.like');
-        let value = 0;
+        let index = 0;
         let contianer = $('.card-container');
         let pg = $('.pg');
 
         card.css('width',`${news.length * 100}%`);
-        // card.css('margin-left','-100%');
         pg.children('span').last().text(news.length);
 
-        function slide (left) {
-            if(left){
-                if(value > 0) {
-                    // let art = card.children().first();
-                    // card.append(art);
-                    value--;
-                } 
-            }
-            else {
-                if(value < news.length-1) {
-                    // let art = card.children().last();
-                    // card.prepend(art);
-                    value++;
-                }
-            }
-            card.stop().animate({marginLeft: `${-value * 100}%`},500);
-            // card.stop().animate({marginLeft: `${-value * 100}%`},500,function(){
-            //     card.css('margin-left', '0%');
-            // });
+        // function slide (left) {
+        //     if(left){
+        //         if(value > 0) {
 
-            pg.children('span').first().text(value+1);
-        }
+        //             value--;
+        //         } 
+        //     }
+        //     else {
+        //         if(value < news.length-1) {
+        //             value++;
+        //         }
+        //     }
+        //     card.stop().animate({marginLeft: `${-value * 100}%`},500);
+        //     pg.children('span').first().text(value+1);
+        // }
+        news.forEach(function(e){
+            let artCl = art.clone(true);
+            artCl.children('h2').text(e.title);
+            artCl.children('p').text(e.detail);
+            artCl.children('img').attr('src',e.img);
+            card.append(artCl);
+        });
+        art.remove();
+        // 무한루프 세팅
+        // 클론 아티클 재탐색
+        art = $('article');
+        card.prepend(art.last());
+        card.css('marginLeft','-100%');
 
         like.click(function(){
             $(this).toggleClass('show');
@@ -176,24 +184,43 @@
                 $(this).text("☆");
             }
         });
-        news.forEach(function(e){
-            let infoCl = info.clone(true);
-            infoCl.children('h2').text(e.title);
-            infoCl.children('p').text(e.detail);
-            infoCl.children('img').attr('src',e.img);
-            card.append(infoCl)
-        });
+
         btn.click(function(){
+            if(index == 0) {
+                index = 10;
+            }
             let left = $(this).hasClass('prev');
-            slide(left);
+            art = $('article');
+            // slide(left);
+            if(left) {
+                card.stop().animate({marginLeft:0},500,function(){
+                    //콜백함수에서 후처리
+                    card.prepend(art.last());
+                    card.css('marginLeft','-100%');
+                    index--;
+                    pg.children('span').first().text(index % 10 + 1);
+                });
+                
+            }
+            else {
+                card.stop().animate({marginLeft: '-200%'},500,function(){
+                    //콜백함수에서 후처리
+                    card.append(art.first());
+                    card.css('marginLeft','-100%');
+                    index++;
+                    pg.children('span').first().text(index % 10 + 1);
+                });
+            }
         });
+       
+
         contianer.on('swipeleft',function(){
-            slide(false);
+            // slide(false);
         });
         contianer.on('swiperight',function(){
-            slide(true);
+            // slide(true);
         });
-        info.remove();
+       
     </script>
 </body>
 </html> 

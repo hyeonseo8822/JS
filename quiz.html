@@ -152,8 +152,49 @@
         {question: '콘솔에 출력하는 함수는?', answer: 'console.log'}
       ];
 
-      let qList = document.que
+      let qList = document.querySelector('.quiz-list');
+      let qCon = document.querySelector('.quiz-container');
+      let btn = document.querySelector('.submit-btn');
 
+      quiz.forEach(function(e,i){
+        let list = qList.cloneNode(true);
+        let title = list.querySelector('.question-item');
+        let ans = list.querySelector('.answer-input');
+        title.className += " disabled";
+        ans.setAttribute('data-ans',e.answer);
+        qCon.append(list);
+        title.innerText = `Q${i+1}.${e.question}`;
+      });
+
+      qList.remove();
+      qList = document.querySelectorAll('.quiz-list');
+      let fList = qList[0].children[0];
+      fList.classList.remove('disabled');
+      fList.className += " active";
+
+      // 기본세팅
+      btn = document.querySelectorAll('.submit-btn');
+      btn.forEach(function(btn){
+        btn.addEventListener('click',function(){
+          // previousElementSibling == prev()
+          let inpAns = this.previousElementSibling.value;
+          let reAns = this.previousElementSibling.getAttribute('data-ans');
+          let nextPro = this.parentNode.parentNode.nextElementSibling;
+          let nextTitle = nextPro.querySelector('.question-item');
+          if(inpAns === reAns) {
+            this.innerText = '⭕';
+            this.parentNode.previousElementSibling.classList.remove('active');
+            nextTitle.className += ' active';
+            nextTitle.classList.remove('disabled');
+          }
+          else {
+            this.innerText = '❌';
+            this.className += ' err';
+          }
+        })
+      });
+
+      //제이쿼리
       // let que = $('.question-item');
       // const list = $('.quiz-list');
       // const ans = $('.answer-item');
