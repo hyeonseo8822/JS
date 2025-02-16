@@ -124,7 +124,7 @@
         
       }
     </style>
-    <script src="./jquary.js"></script>
+    <!-- <script src="./jquary.js"></script> -->
   </head>
   <body>
     <div class="quiz-container">
@@ -152,60 +152,60 @@
         {question: '콘솔에 출력하는 함수는?', answer: 'console.log'}
       ];
 
-      let que = $('.question-item');
-      const list = $('.quiz-list');
-      const ans = $('.answer-item');
-      let submit = $('.submit-btn');
-      const hint = $('.hint');
-      que.click(function(){
-        // 두번 클릭하면 닫힘 toggle
-        if(!$(this).hasClass('disabled')){
-            $(this).toggleClass('active');
-      }
-      });
+      // let que = $('.question-item');
+      // const list = $('.quiz-list');
+      // const ans = $('.answer-item');
+      // let submit = $('.submit-btn');
+      // const hint = $('.hint');
+      // que.click(function(){
+      //   // 두번 클릭하면 닫힘 toggle
+      //   if(!$(this).hasClass('disabled')){
+      //       $(this).toggleClass('active');
+      // }
+      // });
 
-      hint.click(function(){
-        let index = $(this).parent().attr('num-data');
-        let ans = quiz[index].answer;
-        $(this).prevAll('.answer-input').attr('placeholder',ans[0]);
+      // hint.click(function(){
+      //   let index = $(this).parent().attr('num-data');
+      //   let ans = quiz[index].answer;
+      //   $(this).prevAll('.answer-input').attr('placeholder',ans[0]);
 
-      });
+      // });
 
-      quiz.forEach(function(e,i){
-        let qu = que.clone(true);
-        let an = ans.clone(true);
-        qu.text(`Q${i+1}.${e.question}`);
-        qu.addClass('disabled');
-        // attr 속성이 없으면 추가가 된다
-        an.attr('num-data',i)
-        list.append(qu);
-        list.append(an);
-      });
-      que.remove();
-      ans.remove();
+      // quiz.forEach(function(e,i){
+      //   let qu = que.clone(true);
+      //   let an = ans.clone(true);
+      //   qu.text(`Q${i+1}.${e.question}`);
+      //   qu.addClass('disabled');
+      //   // attr 속성이 없으면 추가가 된다
+      //   an.attr('num-data',i)
+      //   list.append(qu);
+      //   list.append(an);
+      // });
+      // que.remove();
+      // ans.remove();
 
-      que = $('.question-item');
-      console.log(que);
-      que.first().removeClass('disabled');
-      submit = $('.submit-btn');
+      // que = $('.question-item');
+      // console.log(que);
+      // que.first().removeClass('disabled');
+      // submit = $('.submit-btn');
 
-      submit.click(function(){
-        let nowVal = $(this).prev().val();
-        let index = $(this).parent().attr('num-data');
-        let ans = quiz[index].answer;
-        console.log(que[index+1]);
-        if(nowVal === ans) {
-          alert("정답입니다.");
-          $(this).text("⭕");
-          $(this).parent().next().removeClass("disabled");
-          $(this).prevAll('.answer-input').attr('disabled',true);
-          que.removeClass("active");
-          $(this).parent().next().addClass("active");
-        }else {
-          alert("오답입니다.");
-          $(this).text("❌");
-        }
-      });
+      // submit.click(function(){
+      //   let nowVal = $(this).prev().val();
+      //   let index = $(this).parent().attr('num-data');
+      //   let ans = quiz[index].answer;
+      //   console.log(que[index+1]);
+      //   if(nowVal === ans) {
+      //     alert("정답입니다.");
+      //     $(this).text("⭕");
+      //     $(this).parent().next().removeClass("disabled");
+      //     $(this).prevAll('.answer-input').attr('disabled',true);
+      //     que.removeClass("active");
+      //     $(this).parent().next().addClass("active");
+      //   }else {
+      //     alert("오답입니다.");
+      //     $(this).text("❌");
+      //   }
+      // });
       
     </script>
   </body>
