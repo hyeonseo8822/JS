@@ -64,10 +64,14 @@
             border-radius: 5px;
             border: 1px solid #ddd;
         }
-        .todo-item span {
-            flex-grow: 1;
-            margin-left: 10px;
-        }
+        .todo-item input {
+            width: 150px;
+            background-color: #fff;
+        } 
+        .todo-item input:disabled {
+            border: none;
+            background-color: transparent;
+        } 
         .delete-btn, .edit-btn {
             background: none;
             border: none;
@@ -85,7 +89,7 @@
         <ul class="todo-list">
             <li class="todo-item">
                 <input type="checkbox">
-                <span>샘플 할 일</span>
+                <input class="addedInp" type="text" value="샘플 할 일" disabled>
                 <button class="edit-btn">✏️</button>
                 <button class="delete-btn">❌</button>
             </li>
@@ -96,25 +100,35 @@
         let inp = document.querySelector('.todo-input');
         let itm = document.querySelector('.todo-item');
         let todoList = document.querySelector('.todo-list');
-        let todo = document.querySelector('span');
-        let del = document.querySelector('.delete-btn');
-        let edit = document.querySelector('.edit-btn');
+        let editOrDel = function(state,dom) {
+            if(state === 'del') {
+                dom.remove();
+            }
+            else {
+                dom.disabled=false;
+                console.log(this.currentTarget);
+            }
+        }
 
         add.addEventListener('click',function() {
             let val = inp.value;
-            if(val !== "") {
+            if(val !== " ") {
                 let newItm = itm.cloneNode(true); // 자식 요소까지지
-                console.log(newItm);
-                newItm.innerText = val;
+                let txt = newItm.querySelector('.addedInp');
+                txt.value = val;
                 todoList.prepend(newItm);
+                inp.value = ' ';
+
+                let edit = newItm.querySelector('.edit-btn');
+                let del = newItm.querySelector('.delete-btn');
+                edit.addEventListener('click',function(){
+                    editOrDel("edit",txt);
+                    this.innerText = '✔️';
+                });
+                del.addEventListener('click',function(){
+                    editOrDel("del",newItm);
+                });            
             }
-        });
-        del.addEventListener('click',function(){
-            // alert("");
-            this.parentNode.remove();
-        });
-        edit.addEventListener('click',function(){
-            alert("");
         });
     </script>
 </body>
