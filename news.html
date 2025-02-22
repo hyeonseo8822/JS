@@ -140,6 +140,7 @@
         const btn = $('button');
         const like = $('.like');
         let index = 0;
+        let flag = false;
         let contianer = $('.card-container');
         let pg = $('.pg');
 
@@ -161,10 +162,46 @@
         //     card.stop().animate({marginLeft: `${-value * 100}%`},500);
         //     pg.children('span').first().text(value+1);
         // }
-        news.forEach(function(e){
+
+        function slide2 (left) {
+            if(left) {
+                if(!flag) {
+                    index = $('article').eq(0).attr('data-idx');
+                    pg.children('span').first().text(index);
+                    flag = true;
+                }
+
+                card.stop().animate({marginLeft:0},500,function(){
+                    //콜백함수에서 후처리
+                    card.prepend(art.last());
+                    card.css('marginLeft','-100%');
+                    // index--;
+                    // pg.children('span').first().text(index % 10 + 1);      
+                    flag = false          
+                });
+                
+            }
+            else {
+                if(!flag) {
+                    index = $('article').eq(2).attr('data-idx');
+                    pg.children('span').first().text(index);
+                    flag = true;
+                }
+                card.stop().animate({marginLeft: '-200%'},500,function(){
+                    //콜백함수에서 후처리
+                    card.append(art.first());
+                    card.css('marginLeft','-100%');
+                    // index++;
+                    // pg.children('span').first().text(index % 10 + 1);
+                    flag = false;
+                });
+            }
+        }
+        news.forEach(function(e,i){
             let artCl = art.clone(true);
             artCl.children('h2').text(e.title);
             artCl.children('p').text(e.detail);
+            artCl.attr('data-idx',i+1);
             artCl.children('img').attr('src',e.img);
             card.append(artCl);
         });
@@ -176,6 +213,7 @@
         card.css('marginLeft','-100%');
 
         like.click(function(){
+            alert("D");
             $(this).toggleClass('show');
             if($(this).hasClass('show')) {
                 $(this).text("★");            
@@ -186,39 +224,21 @@
         });
 
         btn.click(function(){
-            if(index == 0) {
-                index = 10;
-            }
+            // if(index == 0) {
+            //     index = 10;
+            // }
             let left = $(this).hasClass('prev');
             art = $('article');
             // slide(left);
-            if(left) {
-                card.stop().animate({marginLeft:0},500,function(){
-                    //콜백함수에서 후처리
-                    card.prepend(art.last());
-                    card.css('marginLeft','-100%');
-                    index--;
-                    pg.children('span').first().text(index % 10 + 1);
-                });
-                
-            }
-            else {
-                card.stop().animate({marginLeft: '-200%'},500,function(){
-                    //콜백함수에서 후처리
-                    card.append(art.first());
-                    card.css('marginLeft','-100%');
-                    index++;
-                    pg.children('span').first().text(index % 10 + 1);
-                });
-            }
+            slide2(left);
         });
-       
-
         contianer.on('swipeleft',function(){
             // slide(false);
+            slide2(false);
         });
         contianer.on('swiperight',function(){
             // slide(true);
+            slide2(true);
         });
        
     </script>

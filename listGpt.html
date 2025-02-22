@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투두리스트</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            /* 추가되었다가 500픽셀을 안 넘어감 */
+            max-height: 400px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .todo-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+        .todo-item {
+            background: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .todo-item span {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+        .delete-btn, .edit-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📝 투두리스트</h2>
+        <input type="text" class="todo-input" placeholder="할 일을 입력하세요">
+        <button class="btn">추가</button>
+        <ul class="todo-list">
+            <li class="todo-item">
+                <input type="checkbox">
+                <span>샘플 할 일</span>
+                <button class="edit-btn">✏️</button>
+                <button class="delete-btn">❌</button>
+            </li>
+        </ul>
+    </div>
+    <script>
+        let add = document.querySelector('.btn');
+        let inp = document.querySelector('.todo-input');
+        let itm = document.querySelector('.todo-item');
+        let todoList = document.querySelector('.todo-list');
+        let todo = document.querySelector('span');
+        add.addEventListener('click',function() {
+            let val = inp.value;
+            let newItm = itm.cloneNode(true); // 자식 요소까지지
+            todo.innerText = 'String';
+            todoList.append(newItm);
+            
+        });
+    </script>
+</body>
+</html>
