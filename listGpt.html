@@ -100,13 +100,21 @@
         let inp = document.querySelector('.todo-input');
         let itm = document.querySelector('.todo-item');
         let todoList = document.querySelector('.todo-list');
-        let editOrDel = function(state,dom) {
+        let editOrDel = function(state,dom,self) {
             if(state === 'del') {
                 dom.remove();
             }
             else {
-                dom.disabled=false;
-                console.log(this.currentTarget);
+                let st = self.innerText;
+                console.log(st);
+                if(st === '✔️') {
+                    dom.disabled=true;
+                    self.innerText = '✏️'
+                }
+                else {
+                    dom.disabled=false;
+                    self.innerText = '✔️';
+                }
             }
         }
 
@@ -122,14 +130,14 @@
                 let edit = newItm.querySelector('.edit-btn');
                 let del = newItm.querySelector('.delete-btn');
                 edit.addEventListener('click',function(){
-                    editOrDel("edit",txt);
-                    this.innerText = '✔️';
+                    editOrDel("edit",txt,this);
                 });
                 del.addEventListener('click',function(){
-                    editOrDel("del",newItm);
+                    editOrDel("del",newItm,this);
                 });            
             }
         });
+        itm.remove();
     </script>
 </body>
 </html>
