@@ -97,12 +97,24 @@
         let itm = document.querySelector('.todo-item');
         let todoList = document.querySelector('.todo-list');
         let todo = document.querySelector('span');
+        let del = document.querySelector('.delete-btn');
+        let edit = document.querySelector('.edit-btn');
+
         add.addEventListener('click',function() {
             let val = inp.value;
-            let newItm = itm.cloneNode(true); // 자식 요소까지지
-            todo.innerText = 'String';
-            todoList.append(newItm);
-            
+            if(val !== "") {
+                let newItm = itm.cloneNode(true); // 자식 요소까지지
+                console.log(newItm);
+                newItm.innerText = val;
+                todoList.prepend(newItm);
+            }
+        });
+        del.addEventListener('click',function(){
+            // alert("");
+            this.parentNode.remove();
+        });
+        edit.addEventListener('click',function(){
+            alert("");
         });
     </script>
 </body>
