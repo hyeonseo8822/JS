@@ -120,7 +120,7 @@
 
         add.addEventListener('click',function() {
             let val = inp.value;
-            if(val !== " ") {
+            if(val !== " " && val !== "") {
                 let newItm = itm.cloneNode(true); // 자식 요소까지지
                 let txt = newItm.querySelector('.addedInp');
                 txt.value = val;

@@ -122,6 +122,7 @@
     let getScore = document.querySelector('#player-score');
     let getScoreC = document.querySelector('#computer-score')
     let imgs;
+    let flag = true;
 
     let score = 0; // 내 스코워
     let scoreC = 0; // 컴퓨터 스코워
@@ -143,34 +144,32 @@
     btn.forEach(function (e) {
       e.addEventListener('click', function () {
         if (this.id != 'refresh') {
-          clearInterval(imgs);
-
-
-          
-          e.className += ' disabled';
-          let cu = com[ch];
-          mn.setAttribute('src', `${cu}.png`);
-          let me = this.innerText;
-          console.log(cu);
-          console.log(me);
-          if (cu === me) {
-            result.innerText = '비겼습니다.';
-          }
-          else {
-            if ((me === '가위' && cu === '보') || (me === '바위' && cu === '가위') || (me === '보' && cu === '바위')) {
-              result.innerText = '이겼습니다.';
-              score+=10;
+          if (flag) {
+            flag = false;
+            clearInterval(imgs);
+            let cu = com[ch];
+            mn.setAttribute('src', `${cu}.png`);
+            let me = this.innerText;
+            if (cu === me) {
+              result.innerText = '비겼습니다.';
             }
             else {
-              result.innerText = '졌습니다.';
-              scoreC+=10;
+              if ((me === '가위' && cu === '보') || (me === '바위' && cu === '가위') || (me === '보' && cu === '바위')) {
+                result.innerText = '이겼습니다.';
+                score += 10;
+              }
+              else {
+                result.innerText = '졌습니다.';
+                scoreC += 10;
+              }
             }
+            getScore.innerText = score;
+            getScoreC.innerText = scoreC;
           }
-          getScore.innerText = score;
-          getScoreC.innerText = scoreC;
         }
         else {
           clearInterval(imgs);
+          flag = true;
           newGame();
           result.innerText = ' ';
         }
